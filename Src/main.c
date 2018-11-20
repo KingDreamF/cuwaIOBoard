@@ -118,8 +118,8 @@ int main(void)
   {
 
   /* USER CODE END WHILE */
-	
-	
+	//printf("hello");
+	//HAL_UART_Transmit(&huart1,(uint8_t*)"hello",sizeof("hello"),0xff);
   /* USER CODE BEGIN 3 */
 	if(g_recv_end_flag == 1)   //接收完成标志
     {
@@ -127,17 +127,17 @@ int main(void)
 	  	memset(aTxBuffer,0,sizeof(aTxBuffer));
 	 	memcpy(aTxBuffer,aRxBuffer,g_rx_len);
 		HAL_UART_Transmit_DMA(&huart1,aTxBuffer, g_rx_len);
-
+		
         g_rx_len = 0;//清除计数
         g_recv_end_flag = 0;//清除接收结束标志位
         memset(aRxBuffer,0,sizeof(aRxBuffer));
-		
-    }   
-//	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3|GPIO_PIN_4, GPIO_PIN_RESET);
-//	
-//	HAL_Delay(200);
-//	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3|GPIO_PIN_4, GPIO_PIN_SET);
-//	HAL_Delay(200);
+		uint32_t color = aTxBuffer[0]<<16|aTxBuffer[1]<<8|aTxBuffer[2];
+		setRGBArgument(1,color,aTxBuffer[3]);
+    }  
+
+	test2();
+	HAL_Delay(5);
+
   }
   /* USER CODE END 3 */
 
